@@ -2,8 +2,13 @@ import { createContext, useContext, useState } from 'react';
 
 const CurrentUserContext = createContext(null);
 
+const AnotherContext = createContext({
+  name: "AnotherContext"
+})
+
 
 export default function MyApp() {
+
   const [currentUser, setCurrentUser] = useState(null);
   const [stateProp, setStateProp] = useState("Yes");
 
@@ -35,6 +40,9 @@ export default function MyApp() {
       >
         <Form />
       </CurrentUserContext.Provider>
+   
+        <UserMessage />
+     
     </div>
   );
 }
@@ -46,9 +54,22 @@ function Form({ children }) {
   return (
     <Panel title="Welcome">
       <LoginButton />
+      
     </Panel>
   );
 }
+
+
+
+const UserMessage = _ => {
+
+  const ctx = useContext(AnotherContext);
+
+  return (
+    <div>Default value 'name' property of AnotherContext is '{ctx.name}' </div>
+  )
+
+} //UserMessage
 
 function LoginButton() {
 
@@ -56,7 +77,6 @@ function LoginButton() {
 
   console.log('LoginButton: ctx is', ctx);
 
-  //setTimeout(() => {ctx.setPropValuee("money")},5000);
   setTimeout(() => { ctx.setStateProp("money") }, 5000);
 
 
